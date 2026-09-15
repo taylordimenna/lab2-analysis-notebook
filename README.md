@@ -76,7 +76,7 @@ In the notebook:
 3. Confirm that all cells were executed without errors.
 
 ## Run Data Fetch Script
-```fetch_data.py``` retrieves the orignial dataset (GSE52778) directly from NCBI FEO.
+```fetch_data.py``` retrieves the orignial dataset (GSE52778) directly from NCBI GEO.
 
 In the repository directory, run the following command:
 
