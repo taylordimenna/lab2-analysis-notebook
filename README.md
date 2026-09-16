@@ -138,6 +138,6 @@ This produces ```python_notebook.html```, which contains the rendered output in 
 
 ```python_notebook.ipynb``` contains the Jupyter notebook that loads the data, performs a transformation/analysis, produces a visualization to address the research question. The Graduate Addendum is located here.
 
-```r_notebook.Rmd``` contains the R Notebook that performs the sama analysis as ```python_notebook.ipynb``` just using R. The Graduate Addendum is located here.
+```r_notebook.Rmd``` contains the R Notebook that performs the same analysis as ```python_notebook.ipynb``` just using R. The Graduate Addendum is located here.
 
 ```r_notebook.html``` contains the HTML rendered output for the ```r_notebook.Rmd``` R notebook.
