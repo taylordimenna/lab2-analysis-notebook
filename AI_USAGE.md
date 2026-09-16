@@ -1,12 +1,14 @@
 ## AI Usage within python_notebook.ipynb
 ### Determining the Appropriate Analysis
-I used ChatGPT (GPT-5.6) to help me determine possible ways to analysis my data based off my research question. I asked ChatGPT for examples of non-trivial transformations and analyses that would be appropriate for determining how the different asthma treatments affect gene expression. The prompt I typed into the LLM was:
+I used ChatGPT (GPT-5.6) to help me determine possible ways to analysis my data based off the research question I created. The prompt I typed into the LLM was:
 
     "What are some possible non-trivial transformations and analyses that would be appropriate for determining how different treatments affect gene expression."
 
 After asking for more clarification on the dataset, it suggested many different approaches, one of which being: using a log2(FPKM + 1) transformation (to reduce the influence of high expression values) and then to use a principal component analysis (PCA) to explore the differences in the gene expressions.
 
-I then asked for a longer explaination on that method so I could implement it within the notebook.
+This means that the PCA was used to visualize the data so any patterns in gene expression could be more easily interpreted, after the log transformation compressed the scale of the data preventing high expression genes from dominating the PCA.
+
+I then went to Google to get more information on these methods so I could then implement it within the notebook, without relying on directions from ChatGPT.
 
 ## AI Usage within python_notebook.html
 ### Converting Jupyter Notebook to HTML file
