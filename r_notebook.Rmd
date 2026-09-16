@@ -1,0 +1,141 @@
+---
+title: "Human Airway Smooth Muscle Cell Responses to Asthma Medications"
+author: "Taylor DiMenna"
+date: "2026-09-15"
+output: html_document
+---
+# Human Airway Smooth Muscle Cell Responses to Asthma Medications
+This assignment is using the GEO GSE52778 (airway RNA-seq) dataset. This dataset contains RNA sequencing data from human airway smooth muscle cells under four different asthma treatment conditions: treated with Dexamethasone, Albuterol, left untreated, or treated with both Dexamethasone + Albuterol.
+
+## Research Question
+How do different asthma treatments affect gene expression in human airway smooth muscle cells?
+
+## Load Packages
+````{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+````
+
+## Load Data
+````{r}
+url <- "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE52778&format=file&file=GSE52778_All_Sample_FPKM_Matrix.txt.gz"
+
+fpkm <- read_table(
+  url,
+  show_col_types = FALSE
+)
+
+dim(fpkm)
+````
+
+## Select Sample Columns
+````{r}
+sample_columns <- c(
+  "Dex_LL14",
+  "Dex_LL06",
+  "Dex_LL02",
+  "Dex_LL10",
+  "Alb_LL07",
+  "Alb_LL03",
+  "Alb_LL11",
+  "Alb_LL15",
+  "Untreated_LL09",
+  "Untreated_LL05",
+  "Untreated_LL13",
+  "Untreated_LL01",
+  "Alb_Dex_LL08",
+  "Alb_Dex_LL04",
+  "Alb_Dex_LL12",
+  "Alb_Dex_LL16"
+)
+
+expression <- fpkm %>%
+  select(all_of(sample_columns))
+
+dim(expression)
+````
+
+## Log2 Transformation
+A log transformation was done (took the log base 2) of each gene expression value to compress the scale of the data and make them more balanced, so extremely large values didn't have a large influence on the final results
+````{r}
+log_expression <- expression %>%
+  mutate(across(everything(), ~log2(.x + 1)))
+
+dim(log_expression)
+````
+
+## Prepare Data for PCA
+````{r}
+expression_for_pca <- t(as.matrix(log_expression))
+
+dim(expression_for_pca)
+````
+
+## PCA
+PCA is used to explore whether the samples receiving different asthma treatments showed differences in their overall gene expression.
+````{r}
+pca <- prcomp(
+  expression_for_pca,
+  center = TRUE,
+  scale. = FALSE
+)
+
+summary(pca)
+````
+
+## PCA Variance Explained
+````{r}
+pca_variance <- (pca$sdev^2) / sum(pca$sdev^2)
+
+pca_variance[1:2]
+````
+
+## Prepare PCA Results
+````{r}
+pca_df <- as.data.frame(pca$x[, 1:2])
+
+pca_df$Sample <- rownames(pca_df)
+
+metadata <- data.frame(
+  Sample = sample_columns,
+  Treatment = c(
+    "Dexamethasone",
+    "Dexamethasone",
+    "Dexamethasone",
+    "Dexamethasone",
+    "Albuterol",
+    "Albuterol",
+    "Albuterol",
+    "Albuterol",
+    "No treatment",
+    "No treatment",
+    "No treatment",
+    "No treatment",
+    "Dexamethasone + Albuterol",
+    "Dexamethasone + Albuterol",
+    "Dexamethasone + Albuterol",
+    "Dexamethasone + Albuterol"
+  )
+)
+
+pca_df <- pca_df %>%
+  left_join(metadata, by = "Sample")
+
+dim(pca_df)
+````
+
+## PCA
+````{r}
+ggplot(pca_df, aes(x = PC1, y = PC2, color = Treatment)) +
+  geom_point(size = 3) +
+  labs(
+    title = "PCA of Human Airway Smooth Muscle Gene Expression",
+    x = paste0("PC1 (", round(pca_variance[1] * 100, 2), "%)"),
+    y = paste0("PCA (", round(pca_variance[2] * 100, 2), "%)"),
+    color = "Treatment"
+  ) +
+  theme_minimal()
+````
+## Interpretation of the Result
+According to the PCA, both the gene expression of Dexamethasone treated samples and untreated samples showed little variation in gene expression, and clearly differed from each other along PC1. The Albuterol and Dexamethasone + Albuterol treated samples, however, showed greater variation in gene expression and less distinct clustering. Overall, these results suggest that different asthma treatments can be associated with differences in gene expression patterns in human airway smooth muscle cells.
