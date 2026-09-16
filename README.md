@@ -17,10 +17,10 @@ This analysis compares four different asthma treatment groups:
 ### Dataset
 The dataset is the "Human Airway Smooth Muscle Transcriptome Changes in Response to Asthma Medications" from the NCBI Gene Expression Omnibus (GEO), accession GSE52778.
 
-It is loaded directly from GEO using the URL provided in the lab2-analysis-notebook README.md. No manual download is needed.
+It is loaded directly from the NCBI GEO download URL. No manual download is needed.
 
 URL:
-https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE52778&format=filefile=GSE52778_All_Sample_FPKM_Matrix.txt.gz
+https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE52778&format=file&file=GSE52778_All_Sample_FPKM_Matrix.txt.gz
 
 ## Setup
 ### 1. Clone the repository
@@ -37,13 +37,14 @@ Run the following command:
 
 You are now inside the ```lab2-analysis_notebook``` directory.
 
-### 3. Verify Python
+## Python Setup
+### 1. Verify Python
 Python version 3 is required. To check and confirm that Python is available, run the following command:
 
     python --version
 
-### 4. Download required packages
-The following packages are located within the notebook:
+### 2. Download required packages
+The following packages are required for the notebook:
 - pandas
 - numpy
 - matplotlib
@@ -51,13 +52,28 @@ The following packages are located within the notebook:
 - jupyter
 - nbconvert
 
-These packages need to be installed for the python notebook to run. 
+These packages need to be installed for the Python Notebook to run. 
 
-To download them, within the VS Code Terminal run
+To install them, run the following command within the VS Code Terminal:
 
     python -m pip install pandas numpy matplotlib scikit-learn jupyter nbconvert
 
 This will download them all at once.
+
+## R Setup
+R 4.5.1 and RStudio were used to create and run the R Notebook.
+
+The following packages are required for the notebook:
+- readr
+- dplyr
+- ggplot2
+- rmarkdown
+
+These packages need to be installed for the R Notebook to run.
+
+To install them, open RStudio and run the following command:
+
+    install.packages(c("readr", "dplyr", "ggplot2", "rmarkdown"))
 
 ## Run the Python Notebook
 ### 1. Open the notebook
@@ -74,6 +90,22 @@ In the notebook:
 1. Restart the kernel.
 2. Run all cells
 3. Confirm that all cells were executed without errors.
+
+## Run the R Notebook
+### 1. Open the R project
+Open ```lab2-analysis-notebook.Rproj``` in RStudio.
+
+This opens the repository as an RStudio project.
+
+### 2. Open the R Notebook
+Open ```r_notebook.Rmd``` in RStudio.
+
+### 3. Run the analysis
+In the RStudio Console, run the following command:
+
+    rmarkdown::render("r_notebook.Rmd")
+
+This produces ```r_notebook.html```, which contains the rendered output in HTML form.
 
 ## Run Data Fetch Script
 ```fetch_data.py``` retrieves the orignial dataset (GSE52778) directly from NCBI GEO.
@@ -94,10 +126,18 @@ To generate the HTML version of the Python notebook, from the repository directo
 This produces ```python_notebook.html```, which contains the rendered output in HTML form.
 
 ## Repository Contents
+```.gitignore``` contains the files that should not be committed to the repository.
+
 ```AI_USAGE.md``` contains information about any AI tools used to help complete this lab.
 
 ```fetch_data.py``` contains a script that fetches the source data.
 
-```python_notebook.html``` contains the HTML rendered output for the python_notebook.ipynb Jupyter notebook.
+```lab2-analysis-notebook.Rproj``` is the RStudio project file for the repository.
 
-```python_notebook.ipynb``` contains the Jupyter notebook that loads the data, performs a transformation/analysis, produces a visualization to address the research question.
+```python_notebook.html``` contains the HTML rendered output for the ```python_notebook.ipynb``` Jupyter notebook.
+
+```python_notebook.ipynb``` contains the Jupyter notebook that loads the data, performs a transformation/analysis, produces a visualization to address the research question. The Graduate Addendum is located here.
+
+```r_notebook.Rmd``` contains the R Notebook that performs the sama analysis as ```python_notebook.ipynb``` just using R. The Graduate Addendum is located here.
+
+```r_notebook.html``` contains the HTML rendered output for the ```r_notebook.Rmd``` R notebook.
