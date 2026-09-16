@@ -35,7 +35,7 @@ Run the following command:
 
     cd lab2-analysis-notebook
 
-You are now inside the ```lab2-analysis_notebook``` directory.
+You are now inside the ```lab2-analysis-notebook``` directory.
 
 ## Python Setup
 ### 1. Verify Python
@@ -108,7 +108,7 @@ In the RStudio Console, run the following command:
 This produces ```r_notebook.html```, which contains the rendered output in HTML form.
 
 ## Run Data Fetch Script
-```fetch_data.py``` retrieves the orignial dataset (GSE52778) directly from NCBI GEO.
+```fetch_data.py``` retrieves the original dataset (GSE52778) directly from NCBI GEO.
 
 In the repository directory, run the following command:
 
